@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:08+01:00
 * @Filename: main.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T22:49:10+01:00
+ * @Last modified time: 2018-03-08T23:56:22+01:00
 */
 
 #include "demineur.h"
@@ -15,7 +15,7 @@ t_demineur *init_struct()
     demineur = malloc(sizeof(t_demineur));
 
     demineur->time = 0;
-    demineur->nBomb = 0;
+    demineur->nBomb = 10;
     demineur->mapSize.x = CELL_WIDTH;
     demineur->mapSize.y = CELL_HEIGHT;
     demineur->w_size.x = CELL_WIDTH * 32;
@@ -47,25 +47,21 @@ int main()
     create_map(demineur);
     setup_mines(demineur);
 
-<<<<<<< HEAD
     afficher_Sprites(demineur);
-=======
->>>>>>> ccca4cc70d507e104758178afa9b021e0b7b64c6
-/*
+    /*
     SetTexture_Sprite(&demineur->map[4][6].sprite, TEXTURE_EXPLODEDBOMB);
     SetTexture_Sprite(&demineur->map[3][6].sprite, TEXTURE_NONE);
     SetTexture_Sprite(&demineur->map[5][6].sprite, TEXTURE_NONE);
     SetTexture_Sprite(&demineur->map[3][7].sprite, TEXTURE_NONE);
     SetTexture_Sprite(&demineur->map[4][5].sprite, TEXTURE_FLAG);
-*/
-<<<<<<< HEAD
-
-
-=======
->>>>>>> ccca4cc70d507e104758178afa9b021e0b7b64c6
+    */
     while (sfRenderWindow_isOpen(par_w->window))
     {
-
+        //  FERMER LA FENETRE AVEC LA CROIX
+        
+        if (sfRenderWindow_pollEvent(par_w->window, &par_w->event))
+        if (par_w->event.type == sfEvtClosed)
+        sfRenderWindow_close(par_w->window);
         //if (sfMouse_isButtonPressed(sfMouseLeft) == sfTrue)   // TEST CLIC GAUCHE
         // if (sfKeyboard_isKeyPressed(sfKeyEscape) == sfTrue)  // TEST TOUCHE CLAVIER
 

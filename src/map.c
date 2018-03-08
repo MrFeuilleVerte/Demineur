@@ -3,10 +3,47 @@
 * @Date:   2018-03-08T16:55:53+01:00
 * @Filename: map.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T22:21:58+01:00
+ * @Last modified time: 2018-03-08T23:27:41+01:00
 */
 
 #include "demineur.h"
+
+void afficher_Sprites(t_demineur *demineur)
+{
+    int x = 0;
+    int y = 0;
+
+    while (y < demineur->mapSize.y)
+    {
+        while (x < demineur->mapSize.x)
+        {
+            if (demineur->map[y][x].isBomb == true)
+            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_REMOVEDBOMB); // ici les bombes
+            ++x;
+        }
+        x = 0;
+        ++y;
+    }
+
+    x = 0;
+    y = 0;
+
+    while (y < demineur->mapSize.y)
+    {
+        while (x < demineur->mapSize.x)
+        {
+            if (demineur->map[y][x].bombAround == 1)
+            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_1); // ici les bombes
+            else if (demineur->map[y][x].bombAround == 2)
+            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_2); // ici les bombes
+            else if (demineur->map[y][x].bombAround == 3)
+            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_3); // ici les bombes
+            ++x;
+        }
+        x = 0;
+        ++y;
+    }
+}
 
 void display_map(t_parameter_window *par_w, t_demineur *demineur)
 {
