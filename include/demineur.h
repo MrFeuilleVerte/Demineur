@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T19:52:35+01:00
+ * @Last modified time: 2018-03-08T21:24:21+01:00
 */
 
 #include <stdio.h>
@@ -20,6 +20,9 @@
 #define DISP_TEXTURE    32
 #define GAME_NAME       "SNAKE"
 #define FRAME_RATE      30
+
+#define CELL_WIDTH      10
+#define CELL_HEIGHT     20
 
 #define ERROR           84
 
@@ -55,7 +58,6 @@ typedef struct s_sprite
 
 typedef struct		s_parameter_window
 {
-        const sfVideoMode               *mode;
         sfRenderWindow          	*window;
         sfVector2u	             	w_size;
         sfEvent	                	event;
@@ -74,8 +76,8 @@ typedef struct s_cell
 
 typedef struct s_demineur
 {
-        int             time;
-        int             nBomb;
+        int                     time;
+        int                     nBomb;
 
         sfVector2u      mapSize;       // MAX 36 par 64
         t_cell           **map;
