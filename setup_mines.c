@@ -5,6 +5,8 @@ void setup_mines(t_demineur *demineur)
 	int tmpCellx;
 	int tmpCelly;
 
+	srand(time(NULL));
+
 	for (int i = 0; i > demineur->nBomb; ++i)
 	{
 		tmpCellx = rand()%demineur->mapSize.x;
