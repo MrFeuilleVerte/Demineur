@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T21:32:15+01:00
+ * @Last modified time: 2018-03-08T22:09:33+01:00
 */
 
 #include <stdio.h>
@@ -29,8 +29,8 @@
 #define TEXTURE_CELL             "./img/cell.png"               // 9
 #define TEXTURE_NONE             "./img/none.png"               // 0
 #define TEXTURE_FLAG             "./img/flag.png"               // 10
-#define TEXTURE_EXPLODEDBOMB      "./img/explodedBomb.png"        // 11
-#define TEXTURE_REMOVEDBOMB       "./img/removedBomb.png"         // 12
+#define TEXTURE_EXPLODEDBOMB      "./img/explodedBomb.png"      // 11
+#define TEXTURE_REMOVEDBOMB       "./img/removedBomb.png"       // 12
 #define TEXTURE_1                "./img/1.png"                  // 1
 #define TEXTURE_2                "./img/2.png"                  // 2
 #define TEXTURE_3                "./img/3.png"                  // 3
@@ -58,6 +58,7 @@ typedef struct s_sprite
 
 typedef struct		s_parameter_window
 {
+        const sfVideoMode                     *mode;
         sfRenderWindow          	*window;
         sfVector2u	             	w_size;
         sfEvent	                	event;
@@ -80,6 +81,7 @@ typedef struct s_demineur
         int                     nBomb;
 
         sfVector2u      mapSize;       // MAX 36 par 64
+        sfVector2u      w_size;
         t_cell           **map;
 
 }               t_demineur;
@@ -102,3 +104,7 @@ t_sprite Create_Sprite(char *texture);
 //      MINES           //
 
 void setup_mines(t_demineur *);
+
+//      EVENT           //
+
+void event(t_parameter_window *par_w, t_demineur *demineur);

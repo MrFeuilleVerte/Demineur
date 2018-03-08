@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:08+01:00
 * @Filename: main.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T21:34:14+01:00
+ * @Last modified time: 2018-03-08T22:11:53+01:00
 */
 
 #include "demineur.h"
@@ -16,8 +16,10 @@ t_demineur *init_struct()
 
     demineur->time = 0;
     demineur->nBomb = 0;
-    demineur->mapSize.x = CELL_WIDTH * 32;
-    demineur->mapSize.y = CELL_HEIGHT * 32;
+    demineur->mapSize.x = CELL_WIDTH;
+    demineur->mapSize.y = CELL_HEIGHT;
+    demineur->w_size.x = CELL_WIDTH * 32;
+    demineur->w_size.y = CELL_HEIGHT * 32;
 
     return (demineur);
 }
@@ -26,6 +28,9 @@ t_demineur *init_struct()
 void create_window(t_parameter_window *par_w)
 {
     sfVideoMode mode = {CELL_WIDTH * 32, CELL_HEIGHT * 32, 32};
+
+    //par_w->mode = sfVideoMode_getFullscreenModes(NULL);
+
     par_w->w_size.x = CELL_WIDTH * DISP_TEXTURE;
     par_w->w_size.y = CELL_HEIGHT * DISP_TEXTURE;
     par_w->window = sfRenderWindow_create(mode , GAME_NAME, sfTitlebar | sfClose , NULL);
@@ -42,6 +47,7 @@ int main()
     create_map(demineur);
     setup_mines(demineur);
 
+
     while (sfRenderWindow_isOpen(par_w->window))
     {
 
@@ -50,6 +56,8 @@ int main()
 
         // sfVector2i	mouse;                    // GET MOUSE POSITION
         // mouse = sfMouse_getPosition(NULL);
+
+        event(par_w, demineur);
 
         display_map(par_w, demineur);
 

@@ -1,6 +1,5 @@
 #include "demineur.h"
 
-//bite
 void setup_mines(t_demineur *demineur)
 {
 	int tmpCellx;
@@ -22,7 +21,7 @@ void setup_mines(t_demineur *demineur)
 		demineur->map[tmpCellx][tmpCelly].isBomb = true;
 
 		//emplacement de la case sur un pave numerique, 5 la bombe
-		
+
 		if(tmpCellx <= 0 && tmpCelly <= 0)
 		++demineur->map[(tmpCellx - 1)][(tmpCelly - 1)].bombAround; //7
 
@@ -31,13 +30,13 @@ void setup_mines(t_demineur *demineur)
 
 		if(tmpCellx >= demineur->mapSize.x && tmpCelly <= 0)
 		++demineur->map[(tmpCellx + 1)][(tmpCelly - 1)].bombAround; //9
-		
+
 		if(tmpCellx <= 0)
 		++demineur->map[(tmpCellx - 1)][tmpCelly].bombAround; //4
 
 		if(tmpCellx >= demineur->mapSize.x)
 		++demineur->map[(tmpCellx + 1)][tmpCelly].bombAround; //6
-		
+
 		if(tmpCellx <= 0 && tmpCelly >= demineur->mapSize.y)
 		++demineur->map[(tmpCellx - 1)][(tmpCelly + 1)].bombAround; //1
 
