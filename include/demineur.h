@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T16:57:11+01:00
+ * @Last modified time: 2018-03-08T17:06:55+01:00
 */
 
 #include <stdio.h>
@@ -16,11 +16,16 @@
 
 #include <SFML/Graphics.h>
 
-#define NB_TEXTURE      30
+#define NB_TEXTURE      13
 #define GAME_NAME       "SNAKE"
 #define FRAME_RATE      30
 
 #define ERROR           84
+
+#define TEXTURE_CELL            "./img/cell.png"
+#define TEXTURE_NONE             "./img/cell.png"
+#define TEXTURE_FLAG            "./img/cell.png"
+#define TEXTURE_EXPLODEBOMB    "./img/cell.png"
 
 typedef int bool;
 #define true 1
