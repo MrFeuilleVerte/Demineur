@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T22:09:33+01:00
+ * @Last modified time: 2018-03-08T22:14:04+01:00
 */
 
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #define NB_TEXTURE      13
 #define DISP_TEXTURE    32
-#define GAME_NAME       "SNAKE"
+#define GAME_NAME       "DEMINEUR"
 #define FRAME_RATE      30
 
 #define CELL_WIDTH      10
