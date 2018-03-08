@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T15:30:10+01:00
+ * @Last modified time: 2018-03-08T16:57:11+01:00
 */
 
 #include <stdio.h>
@@ -18,9 +18,13 @@
 
 #define NB_TEXTURE      30
 #define GAME_NAME       "SNAKE"
-#define FRAME_RATE      60
+#define FRAME_RATE      30
 
 #define ERROR           84
+
+typedef int bool;
+#define true 1
+#define false 0
 
 typedef struct s_sprite
 {
@@ -40,13 +44,29 @@ typedef struct		s_parameter_window
         sfEvent	                	event;
 }			t_parameter_window;
 
+typedef struct s_cell
+{
+        sfVector2u      coord;
+        bool            isBomb;
+        bool            isFlag;
+        int             bombAround;
+        t_sprite        *sprite;
+}               t_cell;
+
+
 typedef struct s_demineur
 {
-        int             Time;
-        int             N_Bombes;
+        int             time;
+        int             nBomb;
 
-        sfVector2u      Map_Size;
+        sfVector2u      mapSize;       // MAX 36 par 64
+        t_cell           **map;
 
 }               t_demineur;
 
 int	hash(char *str);
+
+//      MAP         //
+
+ void init_map(t_demineur *demineur);
+ void create_map(t_demineur *demineur);
