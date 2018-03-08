@@ -3,7 +3,7 @@
 * @Date:   2018-03-06T11:40:20+01:00
 * @Filename: hash.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T15:30:06+01:00
+ * @Last modified time: 2018-03-08T19:52:30+01:00
 */
 
 #include "demineur.h"

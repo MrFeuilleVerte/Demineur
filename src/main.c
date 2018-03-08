@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:08+01:00
 * @Filename: main.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T17:05:22+01:00
+ * @Last modified time: 2018-03-08T19:50:42+01:00
 */
 
 #include "demineur.h"
@@ -12,7 +12,7 @@ t_demineur *init_struct()
 {
     t_demineur  *demineur;
 
-    demineur = malloc(sizeof(demineur));
+    demineur = malloc(sizeof(t_demineur));
 
     demineur->time = 0;
     demineur->nBomb = 0;
@@ -21,6 +21,7 @@ t_demineur *init_struct()
 
     return (demineur);
 }
+
 
 void create_window(t_parameter_window *par_w)
 {
@@ -41,6 +42,14 @@ int main()
 
     while (sfRenderWindow_isOpen(par_w->window))
     {
+
+        //if (sfMouse_isButtonPressed(sfMouseLeft) == sfTrue)   // TEST CLIC GAUCHE
+        // if (sfKeyboard_isKeyPressed(sfKeyEscape) == sfTrue)  // TEST TOUCHE CLAVIER
+
+        // sfVector2i	mouse;                    // GET MOUSE POSITION
+        // mouse = sfMouse_getPosition(NULL);
+
+        display_map(par_w, demineur);
 
         sfRenderWindow_display(par_w->window);
         sfRenderWindow_clear(par_w->window, sfBlack);

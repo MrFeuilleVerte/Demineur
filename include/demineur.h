@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T17:08:52+01:00
+ * @Last modified time: 2018-03-08T19:52:35+01:00
 */
 
 #include <stdio.h>
@@ -17,28 +17,31 @@
 #include <SFML/Graphics.h>
 
 #define NB_TEXTURE      13
+#define DISP_TEXTURE    32
 #define GAME_NAME       "SNAKE"
 #define FRAME_RATE      30
 
 #define ERROR           84
 
-#define TEXTURE_CELL             "./img/cell.png"
-#define TEXTURE_NONE             "./img/none.png"
-#define TEXTURE_FLAG             "./img/flag.png"
-#define TEXTURE_EXPLODEBOMB      "./img/explodebomb.png"
-#define TEXTURE_REMOVEBOMB       "./img/removebomb.png"
-#define TEXTURE_1                "./img/1.png"
-#define TEXTURE_2                "./img/2.png"
-#define TEXTURE_3                "./img/3.png"
-#define TEXTURE_4                "./img/4.png"
-#define TEXTURE_5                "./img/5.png"
-#define TEXTURE_6                "./img/6.png"
-#define TEXTURE_7                "./img/7.png"
-#define TEXTURE_8                "./img/8.png"
+#define TEXTURE_CELL             "./img/cell.png"               // 9
+#define TEXTURE_NONE             "./img/none.png"               // 0
+#define TEXTURE_FLAG             "./img/flag.png"               // 10
+#define TEXTURE_EXPLODEDBOMB      "./img/explodedBomb.png"        // 11
+#define TEXTURE_REMOVEDBOMB       "./img/removedBomb.png"         // 12
+#define TEXTURE_1                "./img/1.png"                  // 1
+#define TEXTURE_2                "./img/2.png"                  // 2
+#define TEXTURE_3                "./img/3.png"                  // 3
+#define TEXTURE_4                "./img/4.png"                  // 4
+#define TEXTURE_5                "./img/5.png"                  // 5
+#define TEXTURE_6                "./img/6.png"                  // 6
+#define TEXTURE_7                "./img/7.png"                  // 7
+#define TEXTURE_8                "./img/8.png"                  // 8
 
 typedef int bool;
 #define true 1
 #define false 0
+
+enum TEXTURES_NAME {NONE, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, CELL, FLAG, EXPLODEDBOMB, REMOVEDBOMB};
 
 typedef struct s_sprite
 {
@@ -61,6 +64,7 @@ typedef struct		s_parameter_window
 typedef struct s_cell
 {
         sfVector2u      coord;
+        bool            isClicked;
         bool            isBomb;
         bool            isFlag;
         int             bombAround;
@@ -84,3 +88,11 @@ int	hash(char *str);
 
 void init_map(t_demineur *demineur);
 void create_map(t_demineur *demineur);
+void create_all_sprites(t_cell *);
+void display_map(t_parameter_window *par_w, t_demineur *demineur);
+
+//      SPRITES         //
+
+void SetTexture_Sprite(t_sprite sprite, char *textureParam);
+void Draw_Sprite(t_parameter_window *par_w, t_sprite sprite, int position_x, int position_y);
+t_sprite Create_Sprite(char *texture);
