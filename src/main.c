@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:08+01:00
 * @Filename: main.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T22:25:56+01:00
+ * @Last modified time: 2018-03-08T22:49:10+01:00
 */
 
 #include "demineur.h"
@@ -47,7 +47,10 @@ int main()
     create_map(demineur);
     setup_mines(demineur);
 
+<<<<<<< HEAD
     afficher_Sprites(demineur);
+=======
+>>>>>>> ccca4cc70d507e104758178afa9b021e0b7b64c6
 /*
     SetTexture_Sprite(&demineur->map[4][6].sprite, TEXTURE_EXPLODEDBOMB);
     SetTexture_Sprite(&demineur->map[3][6].sprite, TEXTURE_NONE);
@@ -55,8 +58,11 @@ int main()
     SetTexture_Sprite(&demineur->map[3][7].sprite, TEXTURE_NONE);
     SetTexture_Sprite(&demineur->map[4][5].sprite, TEXTURE_FLAG);
 */
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ccca4cc70d507e104758178afa9b021e0b7b64c6
     while (sfRenderWindow_isOpen(par_w->window))
     {
 
