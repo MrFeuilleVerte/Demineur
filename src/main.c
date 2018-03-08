@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:08+01:00
 * @Filename: main.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T21:24:21+01:00
+ * @Last modified time: 2018-03-08T21:34:14+01:00
 */
 
 #include "demineur.h"
@@ -16,8 +16,8 @@ t_demineur *init_struct()
 
     demineur->time = 0;
     demineur->nBomb = 0;
-    demineur->mapSize.x = CELL_WIDTH;
-    demineur->mapSize.y = CELL_HEIGHT;
+    demineur->mapSize.x = CELL_WIDTH * 32;
+    demineur->mapSize.y = CELL_HEIGHT * 32;
 
     return (demineur);
 }
@@ -40,6 +40,7 @@ int main()
 
     create_window(par_w);
     create_map(demineur);
+    setup_mines(demineur);
 
     while (sfRenderWindow_isOpen(par_w->window))
     {

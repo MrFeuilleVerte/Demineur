@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T21:24:21+01:00
+ * @Last modified time: 2018-03-08T21:32:15+01:00
 */
 
 #include <stdio.h>
@@ -98,3 +98,7 @@ void display_map(t_parameter_window *par_w, t_demineur *demineur);
 void SetTexture_Sprite(t_sprite sprite, char *textureParam);
 void Draw_Sprite(t_parameter_window *par_w, t_sprite sprite, int position_x, int position_y);
 t_sprite Create_Sprite(char *texture);
+
+//      MINES           //
+
+void setup_mines(t_demineur *);
