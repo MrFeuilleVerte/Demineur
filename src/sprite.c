@@ -3,16 +3,16 @@
  * @Date:   2018-03-08T15:30:28+01:00
  * @Filename: sprite.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T21:13:18+01:00
+ * @Last modified time: 2018-03-08T22:22:57+01:00
  */
 
  #include "demineur.h"
 
- void SetTexture_Sprite(t_sprite sprite, char *textureParam)
+ void SetTexture_Sprite(t_sprite *sprite, char *textureParam)
  {
-     sprite.texture_name = textureParam;
-     sprite.texture = sfTexture_createFromFile(sprite.texture_name, NULL);
-     sfSprite_setTexture(sprite.sprite, sprite.texture, sfTrue);
+     sprite->texture_name = textureParam;
+     sprite->texture = sfTexture_createFromFile(sprite->texture_name, NULL);
+     sfSprite_setTexture(sprite->sprite, sprite->texture, sfTrue);
  }
 
  void Draw_Sprite(t_parameter_window *par_w, t_sprite sprite, int position_x, int position_y)
