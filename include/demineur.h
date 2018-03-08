@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T17:06:55+01:00
+ * @Last modified time: 2018-03-08T17:08:52+01:00
 */
 
 #include <stdio.h>
@@ -22,10 +22,19 @@
 
 #define ERROR           84
 
-#define TEXTURE_CELL            "./img/cell.png"
-#define TEXTURE_NONE             "./img/cell.png"
-#define TEXTURE_FLAG            "./img/cell.png"
-#define TEXTURE_EXPLODEBOMB    "./img/cell.png"
+#define TEXTURE_CELL             "./img/cell.png"
+#define TEXTURE_NONE             "./img/none.png"
+#define TEXTURE_FLAG             "./img/flag.png"
+#define TEXTURE_EXPLODEBOMB      "./img/explodebomb.png"
+#define TEXTURE_REMOVEBOMB       "./img/removebomb.png"
+#define TEXTURE_1                "./img/1.png"
+#define TEXTURE_2                "./img/2.png"
+#define TEXTURE_3                "./img/3.png"
+#define TEXTURE_4                "./img/4.png"
+#define TEXTURE_5                "./img/5.png"
+#define TEXTURE_6                "./img/6.png"
+#define TEXTURE_7                "./img/7.png"
+#define TEXTURE_8                "./img/8.png"
 
 typedef int bool;
 #define true 1
@@ -73,5 +82,5 @@ int	hash(char *str);
 
 //      MAP         //
 
- void init_map(t_demineur *demineur);
- void create_map(t_demineur *demineur);
+void init_map(t_demineur *demineur);
+void create_map(t_demineur *demineur);
