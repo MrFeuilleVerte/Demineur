@@ -93,7 +93,8 @@ int	hash(char *str);
 void init_map(t_demineur *demineur);
 void create_map(t_demineur *demineur);
 void create_all_sprites(t_cell *);
-void display_map(t_parameter_window *par_w, t_demineur *demineur);
+void display_map(t_parameter_window *par_w, t_demineur *demineur); 
+void afficher_Sprites(t_demineur *demineur);
 
 //      SPRITES         //
 
@@ -104,7 +105,6 @@ t_sprite Create_Sprite(char *texture);
 //      MINES           //
 
 void setup_mines(t_demineur *);
-
 //      EVENT           //
 
 void event(t_parameter_window *par_w, t_demineur *demineur);

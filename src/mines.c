@@ -50,3 +50,33 @@ void setup_mines(t_demineur *demineur)
 	}
 
 }
+
+void afficher_Sprites(t_demineur *demineur){
+
+for (int colonne = 0; colonne < demineur->mapSize.y; ++colonne)
+{
+	for (int ligne = 0; ligne < demineur->mapSize.x; ++ligne)
+	{
+		if (demineur->map[ligne][colonne].isBomb = true)
+		 {
+		 	SetTexture_Sprite(&demineur->map[ligne][colonne].sprite, TEXTURE_REMOVEDBOMB); // ici les bombes
+		 }
+		/*
+		for (int nbBombAround = 1; nbBombAround < 9; ++nbBombAround)
+		{
+			if (demineur->map[colonne][ligne].bombAround == nbBombAround)
+			{
+				SetTexture_Sprite(&demineur->map[ligne][colonne].sprite, TEXTURE_ONE); // ici les numeros
+			}
+		}
+		*/
+	}
+}
+
+
+
+
+		//demineur->map[x][y].isBomb = true;
+
+
+}

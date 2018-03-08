@@ -47,11 +47,15 @@ int main()
     create_map(demineur);
     setup_mines(demineur);
 
+    afficher_Sprites(demineur);
+/*
     SetTexture_Sprite(&demineur->map[4][6].sprite, TEXTURE_EXPLODEDBOMB);
     SetTexture_Sprite(&demineur->map[3][6].sprite, TEXTURE_NONE);
     SetTexture_Sprite(&demineur->map[5][6].sprite, TEXTURE_NONE);
     SetTexture_Sprite(&demineur->map[3][7].sprite, TEXTURE_NONE);
     SetTexture_Sprite(&demineur->map[4][5].sprite, TEXTURE_FLAG);
+*/
+
 
     while (sfRenderWindow_isOpen(par_w->window))
     {
