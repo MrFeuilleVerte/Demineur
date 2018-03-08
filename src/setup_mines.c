@@ -1,5 +1,6 @@
 #include "demineur.h"
 
+//bite
 void setup_mines(t_demineur *demineur)
 {
 	int tmpCellx;
