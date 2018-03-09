@@ -3,14 +3,77 @@
 * @Date:   2018-03-08T21:47:04+01:00
 * @Filename: event.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-09T13:21:02+01:00
+ * @Last modified time: 2018-03-10T00:29:19+01:00
 */
 
 #include "demineur.h"
 
-void    place_flag()
+int     sfGetEventType(t_demineur *demineur, sfEventType type)
+{
+    if (sfRenderWindow_pollEvent(demineur->par_w->window, &demineur->par_w->event))
+    if (demineur->par_w->event.type == type)
+    return(1);
+    else
+    return (0);
+    return (0);
+}
+
+int     relacheButtonMouse(t_demineur *demineur, sfMouseButton button)
+{
+    if (sfGetEventType(demineur, sfEvtMouseButtonReleased) == true &&
+    demineur->par_w->event.mouseButton.button == button)
+    return (1);
+    else
+    return (0);
+    return (0);
+}
+
+void    place_flag(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseRightButton)
 {
 
+    // RESET BUTTON //
+    if (sfMouse_isButtonPressed(sfMouseRight) == sfFalse)
+    canUseRightButton[0] = 1;
+
+    // USE BUTTON //
+    if (canUseRightButton[0] == 1 && sfMouse_isButtonPressed(sfMouseRight) == sfTrue)
+    {
+        // PLACE FLAG //
+        if (demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag != true
+            && demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked != true
+            && demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 0)
+        {
+            canUseRightButton[0] = 0;
+            demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag = true;
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_FLAG);
+
+        //    if (demineur->map[SpriteLocation.y][SpriteLocation.x].isBomb == true)
+        //    printf("BOMBE\n");
+
+            display_map(demineur);
+        }
+        // REMOVE FLAG //
+        else if (demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag == true)
+        {
+            canUseRightButton[0] = 0;
+            demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag = false;
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_CELL);
+            display_map(demineur);
+        }
+    }
+}
+
+void ClickOnCase(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseLeftButton)
+{
+    if (sfMouse_isButtonPressed(sfMouseLeft) == sfFalse)
+    canUseLeftButton[0] = 1;
+    if (canUseLeftButton[0] == 1 && sfMouse_isButtonPressed(sfMouseLeft) == sfTrue)
+    {
+        canUseLeftButton[0] = 0;
+        demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked = true;
+        SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_NONE);
+        display_map(demineur);
+    }
 }
 
 int mouseIsOnScreen(sfVector2i	mouse)
@@ -60,33 +123,23 @@ sfVector2i changeTexture(sfVector2i mouse)
     return (SpriteLocation);
 }
 
-void event(t_parameter_window *par_w, t_demineur *demineur)
+void event(t_demineur *demineur)
 {
     sfVector2i	mouse;
     sfVector2i  SpriteLocation;
 
+    sfEvent rightClic;
 
-    mouse =  sfMouse_getPosition(par_w->window);
+    mouse =  sfMouse_getPosition(demineur->par_w->window);
 
+    static int canUseLeftButton = 1;
+    static int canUseRightButton = 1;
 
     if (mouseIsOnScreen(mouse) == 1)
     {
-        //printf("X = %d | Y = %d\n", mouse.x / 32, mouse.y / 32);
+        SpriteLocation = changeTexture(mouse);
 
-        if (sfMouse_isButtonPressed(sfMouseRight) == sfTrue)
-        {
-            SpriteLocation = changeTexture(mouse);
-            //printf("x = %d | y = %d\n", SpriteLocation.x, SpriteLocation.y);
-            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_FLAG);
-            //    printf("%d\n", mouse.x / 32);
-        }
-        if (sfMouse_isButtonPressed(sfMouseLeft) == sfTrue)
-        {
-            SpriteLocation = changeTexture(mouse);
-            demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked = true;
-            afficher_Sprites(demineur);
-
-        }
-
+        place_flag(demineur, SpriteLocation, &canUseRightButton);
+        ClickOnCase(demineur, SpriteLocation, &canUseLeftButton);
     }
 }

@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T16:55:53+01:00
 * @Filename: map.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-09T13:20:31+01:00
+ * @Last modified time: 2018-03-10T00:24:05+01:00
 */
 
 #include "demineur.h"
@@ -12,6 +12,7 @@ void afficher_Sprites(t_demineur *demineur)
 {
     int x = 0;
     int y = 0;
+
 
     while (y < demineur->mapSize.y)
     {
@@ -65,9 +66,12 @@ void afficher_Sprites(t_demineur *demineur)
         x = 0;
         ++y;
     }
+
+    //sfRenderWindow_clear(demineur->par_w->window, sfBlack);
+    display_map(demineur);
 }
 
-void display_map(t_parameter_window *par_w, t_demineur *demineur)
+void display_bombes(t_demineur *demineur)
 {
     int i = 0;
     int u = 0;
@@ -79,7 +83,8 @@ void display_map(t_parameter_window *par_w, t_demineur *demineur)
     {
         while (x != demineur->mapSize.x)
         {
-            Draw_Sprite(par_w, demineur->map[u][i].sprite, x * DISP_TEXTURE, y * DISP_TEXTURE);
+            if (demineur->map[u][i].isBomb == true)
+            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_REMOVEDBOMB);
             ++x;
             ++i;
         }
@@ -88,6 +93,56 @@ void display_map(t_parameter_window *par_w, t_demineur *demineur)
         ++u;
         ++y;
     }
+    display_map(demineur);
+}
+
+void display_numbers(t_demineur *demineur)
+{
+    int i = 0;
+    int u = 0;
+
+    int x = 0;
+    int y = 0;
+
+    while (y != demineur->mapSize.y)
+    {
+        while (x != demineur->mapSize.x)
+        {
+            if (demineur->map[u][i].isBomb == false && demineur->map[u][i].bombAround == 0)
+            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_REMOVEDBOMB);
+            ++x;
+            ++i;
+        }
+        x = 0;
+        i = 0;
+        ++u;
+        ++y;
+    }
+    display_map(demineur);
+}
+
+void display_map(t_demineur *demineur)
+{
+    int i = 0;
+    int u = 0;
+
+    int x = 0;
+    int y = 0;
+
+    while (y != demineur->mapSize.y)
+    {
+        while (x != demineur->mapSize.x)
+        {
+            Draw_Sprite(demineur, demineur->map[u][i].sprite, x * DISP_TEXTURE, y * DISP_TEXTURE);
+            ++x;
+            ++i;
+        }
+        x = 0;
+        i = 0;
+        ++u;
+        ++y;
+    }
+    sfRenderWindow_display(demineur->par_w->window);
 }
 
 void create_sprite(t_cell *cell)
@@ -108,7 +163,7 @@ void init_map(t_demineur *demineur)
             demineur->map[y][x].coord.y = y;
             demineur->map[y][x].isBomb = false;
             demineur->map[y][x].isFlag = false;
-            demineur->map[y][x].isClicked = 0;
+            demineur->map[y][x].isClicked = false;
             demineur->map[y][x].bombAround = 0;
             create_sprite(&demineur->map[y][x]);
             ++x;
@@ -121,15 +176,15 @@ void init_map(t_demineur *demineur)
 
 void create_map(t_demineur *demineur)
 {
-    int     u = 0;
-    int     i = 0;
+    int     y = 0;
 
     demineur->map = malloc(sizeof(t_cell) * (demineur->mapSize.x * demineur->mapSize.y));
-    while (u != demineur->mapSize.y)
+    while (y != demineur->mapSize.y)
     {
-        demineur->map[u] = malloc(sizeof(t_cell) * (demineur->mapSize.x + 1));
-        ++u;
+        demineur->map[y] = malloc(sizeof(t_cell) * (demineur->mapSize.x + 1));
+        ++y;
     }
+
 
     init_map(demineur);
 }

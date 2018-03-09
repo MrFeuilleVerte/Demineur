@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-09T08:24:15+01:00
+ * @Last modified time: 2018-03-10T00:57:29+01:00
 */
 
 #include <stdio.h>
@@ -58,7 +58,7 @@ typedef struct s_sprite
 
 typedef struct		s_parameter_window
 {
-        const sfVideoMode                     *mode;
+        const sfVideoMode               *mode;
         sfRenderWindow          	*window;
         sfVector2u	             	w_size;
         sfEvent	                	event;
@@ -83,7 +83,7 @@ typedef struct s_demineur
         sfVector2u      mapSize;       // MAX 36 par 64
         sfVector2u      w_size;
         t_cell           **map;
-
+        t_parameter_window *par_w;
 }               t_demineur;
 
 int	hash(char *str);
@@ -93,18 +93,23 @@ int	hash(char *str);
 void init_map(t_demineur *demineur);
 void create_map(t_demineur *demineur);
 void create_all_sprites(t_cell *);
-void display_map(t_parameter_window *par_w, t_demineur *demineur);
+void display_map(t_demineur *demineur);
 void afficher_Sprites(t_demineur *demineur);
+void display_bombes(t_demineur *demineur);
+void display_numbers(t_demineur *demineur);
 
 //      SPRITES         //
 
 void SetTexture_Sprite(t_sprite *sprite, char *textureParam);
-void Draw_Sprite(t_parameter_window *par_w, t_sprite sprite, int position_x, int position_y);
+void Draw_Sprite(t_demineur *demineur, t_sprite sprite, int position_x, int position_y);
 t_sprite Create_Sprite(char *texture);
 
 //      MINES           //
 
 void setup_mines(t_demineur *);
+void numberMinesAround(t_demineur *);
+
 //      EVENT           //
 
-void event(t_parameter_window *par_w, t_demineur *demineur);
+void event(t_demineur *demineur);
+int  sfGetEventType(t_demineur *demineur, sfEventType type);

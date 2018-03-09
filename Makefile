@@ -21,7 +21,7 @@ NAME    =       demineur
 
 CFLAGS  =	-I./include
 CFLAGS	+=	-g3
-##CFLAGS  += 	-Wall -W -Wextra -Wpedantic  ## COMPILATION PARFAITE 
+##CFLAGS  += 	-Wall -W -Wextra -Wpedantic  ## COMPILATION PARFAITE
 
 LDFLAGS	=	-lc_graph_prog_full -lm
 
