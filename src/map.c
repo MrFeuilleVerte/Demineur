@@ -32,12 +32,34 @@ void afficher_Sprites(t_demineur *demineur)
     {
         while (x < demineur->mapSize.x)
         {
-            if (demineur->map[y][x].bombAround == 1)
-            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_1); // ici les bombes
-            else if (demineur->map[y][x].bombAround == 2)
-            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_2); // ici les bombes
-            else if (demineur->map[y][x].bombAround == 3)
-            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_3); // ici les bombes
+            if (demineur->map[y][x].isClicked == true)
+            {  
+                if (demineur->map[y][x].isBomb == true)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_EXPLODEDBOMB); // ici les bombes
+                else if (demineur->map[y][x].bombAround == 0)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_NONE); // ici les case vides
+                else if (demineur->map[y][x].bombAround == 1)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_1); // ici les 1
+                else if (demineur->map[y][x].bombAround == 2)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_2); // ici les 2
+                else if (demineur->map[y][x].bombAround == 3)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_3); // ici les 3
+                else if (demineur->map[y][x].bombAround == 4)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_4); // ici les 4
+                else if (demineur->map[y][x].bombAround == 5 )
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_5); // ici les 5
+                else if (demineur->map[y][x].bombAround == 6)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_6); // ici les 6
+                else if (demineur->map[y][x].bombAround == 7)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_7); // ici les 7
+                else if (demineur->map[y][x].bombAround == 8)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_8); // ici les 8
+            }
+            else if (demineur->map[y][x].isClicked == false){
+                if (demineur->map[y][x].isFlag == true)
+                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_FLAG);
+                else SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_CELL);
+            }
             ++x;
         }
         x = 0;
