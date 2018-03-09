@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T22:23:22+01:00
+ * @Last modified time: 2018-03-09T08:24:15+01:00
 */
 
 #include <stdio.h>
@@ -93,7 +93,7 @@ int	hash(char *str);
 void init_map(t_demineur *demineur);
 void create_map(t_demineur *demineur);
 void create_all_sprites(t_cell *);
-void display_map(t_parameter_window *par_w, t_demineur *demineur); 
+void display_map(t_parameter_window *par_w, t_demineur *demineur);
 void afficher_Sprites(t_demineur *demineur);
 
 //      SPRITES         //
