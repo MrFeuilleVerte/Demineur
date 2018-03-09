@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T21:47:04+01:00
 * @Filename: event.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-09T12:59:41+01:00
+ * @Last modified time: 2018-03-09T13:21:02+01:00
 */
 
 #include "demineur.h"
@@ -53,6 +53,7 @@ sfVector2i changeTexture(sfVector2i mouse)
             return (SpriteLocation);
             ++x;
         }
+        SpriteLocation.x = 0;
         x = 0;
         ++y;
     }
@@ -75,9 +76,17 @@ void event(t_parameter_window *par_w, t_demineur *demineur)
         if (sfMouse_isButtonPressed(sfMouseRight) == sfTrue)
         {
             SpriteLocation = changeTexture(mouse);
-        //    printf("x = %d | y = %d\n", SpriteLocation.x, SpriteLocation.y);
+            //printf("x = %d | y = %d\n", SpriteLocation.x, SpriteLocation.y);
             SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_FLAG);
-        //    printf("%d\n", mouse.x / 32);
+            //    printf("%d\n", mouse.x / 32);
         }
+        if (sfMouse_isButtonPressed(sfMouseLeft) == sfTrue)
+        {
+            SpriteLocation = changeTexture(mouse);
+            demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked = true;
+            afficher_Sprites(demineur);
+
+        }
+
     }
 }

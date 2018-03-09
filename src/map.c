@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T16:55:53+01:00
 * @Filename: map.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T23:27:41+01:00
+ * @Last modified time: 2018-03-09T13:20:31+01:00
 */
 
 #include "demineur.h"
@@ -33,7 +33,7 @@ void afficher_Sprites(t_demineur *demineur)
         while (x < demineur->mapSize.x)
         {
             if (demineur->map[y][x].isClicked == true)
-            {  
+            {
                 if (demineur->map[y][x].isBomb == true)
                 SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_EXPLODEDBOMB); // ici les bombes
                 else if (demineur->map[y][x].bombAround == 0)

@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:08+01:00
 * @Filename: main.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-08T23:56:22+01:00
+ * @Last modified time: 2018-03-09T13:05:17+01:00
 */
 
 #include "demineur.h"
@@ -58,7 +58,7 @@ int main()
     while (sfRenderWindow_isOpen(par_w->window))
     {
         //  FERMER LA FENETRE AVEC LA CROIX
-        
+
         if (sfRenderWindow_pollEvent(par_w->window, &par_w->event))
         if (par_w->event.type == sfEvtClosed)
         sfRenderWindow_close(par_w->window);

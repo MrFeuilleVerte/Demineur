@@ -9,7 +9,7 @@ void setup_mines(t_demineur *demineur)
 
 	for (int i = 0; i < demineur->nBomb; ++i)
 	{
-		tmpCellx = rand()%demineur->mapSize.x;
+		tmpCellx = (rand()%demineur->mapSize.x) + 1;
 		tmpCelly = rand()%demineur->mapSize.y;
 
 		while(demineur->map[tmpCelly][tmpCellx].isBomb == true)
