@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T21:47:04+01:00
 * @Filename: event.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-10T00:29:19+01:00
+ * @Last modified time: 2018-03-11T12:54:07+01:00
 */
 
 #include "demineur.h"
@@ -28,7 +28,7 @@ int     relacheButtonMouse(t_demineur *demineur, sfMouseButton button)
     return (0);
 }
 
-void    place_flag(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseRightButton)
+int    place_flag(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseRightButton)
 {
 
     // RESET BUTTON //
@@ -39,17 +39,18 @@ void    place_flag(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseR
     if (canUseRightButton[0] == 1 && sfMouse_isButtonPressed(sfMouseRight) == sfTrue)
     {
         // PLACE FLAG //
-        if (demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag != true
-            && demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked != true
-            && demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 0)
+        if ((demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag == false)
+        && (demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked == false))
         {
             canUseRightButton[0] = 0;
             demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag = true;
             SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_FLAG);
-
-        //    if (demineur->map[SpriteLocation.y][SpriteLocation.x].isBomb == true)
-        //    printf("BOMBE\n");
-
+            if (checkWin(demineur) == 1)
+            {
+                demineur->win = true;
+                if (end(demineur) == 1)
+                return (1);
+            }
             display_map(demineur);
         }
         // REMOVE FLAG //
@@ -57,23 +58,100 @@ void    place_flag(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseR
         {
             canUseRightButton[0] = 0;
             demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag = false;
+            demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked == false;
             SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_CELL);
             display_map(demineur);
+            if (checkWin(demineur) == 1)
+            {
+                demineur->win = true;
+                if (end(demineur) == 1)
+                return (1);
+            }
         }
     }
 }
 
-void ClickOnCase(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseLeftButton)
+int ShowCellNone(t_demineur *demineur, int x, int y)
+{
+    int i = 0;
+    int coord_x[] = {-1, 0, 1, 1, 1, 0, -1, -1, 0};
+    int coord_y[] = {-1, -1, -1, 0, 1, 1, 1, 0, 0};
+
+    // ORDRE CHECK //
+
+    //123
+    //894
+    //765
+
+    if (demineur->map[y][x].bombAround > 0)
+        return (0);
+
+
+    while (i < 9)
+    {
+        if ((x + coord_x[i] >= 0 && x + coord_x[i] < demineur->mapSize.x)
+        && (y + coord_y[i] >= 0 && y + coord_y[i] < demineur->mapSize.y))
+        {
+            if ((demineur->map[y + coord_y[i]][x + coord_x[i]].isFlag == false)
+            && (demineur->map[y + coord_y[i]][x + coord_x[i]].isBomb == false)
+            && (demineur->map[y + coord_y[i]][x + coord_x[i]].isClicked == false))
+            {
+                demineur->map[y + coord_y[i]][x + coord_x[i]].isClicked = true;
+                afficher_Sprites(demineur, x + coord_x[i], y + coord_y[i]);
+                ShowCellNone(demineur, x + coord_x[i], y + coord_y[i]);
+            }
+        }
+        ++i;
+    }
+    return (0);
+}
+
+int ClickOnCase(t_demineur *demineur, sfVector2i SpriteLocation, int *canUseLeftButton)
 {
     if (sfMouse_isButtonPressed(sfMouseLeft) == sfFalse)
     canUseLeftButton[0] = 1;
+
     if (canUseLeftButton[0] == 1 && sfMouse_isButtonPressed(sfMouseLeft) == sfTrue)
     {
         canUseLeftButton[0] = 0;
-        demineur->map[SpriteLocation.y][SpriteLocation.x].isClicked = true;
-        SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_NONE);
+        if (demineur->map[SpriteLocation.y][SpriteLocation.x].isFlag == false)
+        {
+            if (demineur->map[SpriteLocation.y][SpriteLocation.x].isBomb == true)
+            {
+                SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_EXPLODEDBOMB);
+                display_map(demineur);
+                demineur->lose = true;
+                if (end(demineur) == 1)
+                return (1);
+            }
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 1)
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_1); // ici les 1
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 2)
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_2); // ici les 2
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 3)
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_3); // ici les 3
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 4)
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_4); // ici les 4
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 5 )
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_5); // ici les 5
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 6)
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_6); // ici les 6
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 7)
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_7); // ici les 7
+            else if (demineur->map[SpriteLocation.y][SpriteLocation.x].bombAround == 8)
+            SetTexture_Sprite(&demineur->map[SpriteLocation.y][SpriteLocation.x].sprite, TEXTURE_8); // ici les 8
+            else
+            ShowCellNone(demineur, SpriteLocation.x, SpriteLocation.y);
+            if (checkWin(demineur) == 1)
+            {
+                demineur->win = true;
+                if (end(demineur) == 1)
+                return (1);
+            }
+        }
         display_map(demineur);
     }
+    return (0);
 }
 
 int mouseIsOnScreen(sfVector2i	mouse)
@@ -107,12 +185,12 @@ sfVector2i changeTexture(sfVector2i mouse)
     while (y != CELL_HEIGHT)
     {
         SpriteLocation.y = y;
-        if (y >= mouse.y / 32 && x >= mouse.x / 32)
+        if (y >= mouse.y / DISP_TEXTURE && x >= mouse.x / DISP_TEXTURE)
         return (SpriteLocation);
         while (x != CELL_WIDTH)
         {
             SpriteLocation.x = x;
-            if (y >= mouse.y / 32 && x >= mouse.x / 32)
+            if (y >= mouse.y / DISP_TEXTURE && x >= mouse.x / DISP_TEXTURE)
             return (SpriteLocation);
             ++x;
         }
@@ -123,7 +201,7 @@ sfVector2i changeTexture(sfVector2i mouse)
     return (SpriteLocation);
 }
 
-void event(t_demineur *demineur)
+int event(t_demineur *demineur)
 {
     sfVector2i	mouse;
     sfVector2i  SpriteLocation;
@@ -139,7 +217,10 @@ void event(t_demineur *demineur)
     {
         SpriteLocation = changeTexture(mouse);
 
-        place_flag(demineur, SpriteLocation, &canUseRightButton);
-        ClickOnCase(demineur, SpriteLocation, &canUseLeftButton);
+        if ((place_flag(demineur, SpriteLocation, &canUseRightButton)) == 1)
+        return (1);
+        if ((ClickOnCase(demineur, SpriteLocation, &canUseLeftButton)) == 1)
+        return (1);
     }
+    return (0);
 }

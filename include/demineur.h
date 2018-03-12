@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:03+01:00
 * @Filename: demineur.h
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-10T00:57:29+01:00
+ * @Last modified time: 2018-03-10T16:39:14+01:00
 */
 
 #include <stdio.h>
@@ -17,7 +17,7 @@
 #include <SFML/Graphics.h>
 
 #define NB_TEXTURE      13
-#define DISP_TEXTURE    32
+#define DISP_TEXTURE    30
 #define GAME_NAME       "DEMINEUR"
 #define FRAME_RATE      30
 
@@ -39,6 +39,8 @@
 #define TEXTURE_6                "./img/6.png"                  // 6
 #define TEXTURE_7                "./img/7.png"                  // 7
 #define TEXTURE_8                "./img/8.png"                  // 8
+#define TEXTURE_Lose             "./img/youlose.png"            // lose
+#define TEXTURE_Win              "./img/youwin.png"             // win
 
 typedef int bool;
 #define true 1
@@ -77,12 +79,17 @@ typedef struct s_cell
 
 typedef struct s_demineur
 {
-        int                     time;
-        int                     nBomb;
+        int             time;
+        int             nBomb;
+        int             Score;
+        bool            win;
+        bool            lose;
+        bool            restart;
 
         sfVector2u      mapSize;       // MAX 36 par 64
         sfVector2u      w_size;
         t_cell           **map;
+        t_sprite        end;
         t_parameter_window *par_w;
 }               t_demineur;
 
@@ -94,7 +101,7 @@ void init_map(t_demineur *demineur);
 void create_map(t_demineur *demineur);
 void create_all_sprites(t_cell *);
 void display_map(t_demineur *demineur);
-void afficher_Sprites(t_demineur *demineur);
+void afficher_Sprites(t_demineur *demineur, int x, int y);
 void display_bombes(t_demineur *demineur);
 void display_numbers(t_demineur *demineur);
 
@@ -111,5 +118,16 @@ void numberMinesAround(t_demineur *);
 
 //      EVENT           //
 
-void event(t_demineur *demineur);
+int event(t_demineur *demineur);
 int  sfGetEventType(t_demineur *demineur, sfEventType type);
+
+//      END             //
+
+int end(t_demineur *demineur);
+int checkWin(t_demineur *demineur);
+
+//      FREE            //
+
+int     free_struct_demineur(t_demineur *demineur);
+int     free_struct_map(t_cell **map);
+int     destroy_sprite(t_sprite *sprite);

@@ -3,7 +3,7 @@
 * @Date:   2018-03-08T15:20:08+01:00
 * @Filename: main.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-10T00:55:13+01:00
+ * @Last modified time: 2018-03-12T08:44:34+01:00
 */
 
 #include "demineur.h"
@@ -16,18 +16,22 @@ t_demineur *init_struct()
     demineur->par_w = malloc(sizeof(t_parameter_window));
 
     demineur->time = 0;
-    demineur->nBomb = 0;
+    demineur->nBomb = 10;
     demineur->mapSize.x = CELL_WIDTH;
     demineur->mapSize.y = CELL_HEIGHT;
     demineur->w_size.x = CELL_WIDTH * 32;
     demineur->w_size.y = CELL_HEIGHT * 32;
+
+    demineur->win = false;
+    demineur->lose = false;
+    demineur->restart = true;
 
     return (demineur);
 }
 
 void create_window(t_demineur *demineur)
 {
-    sfVideoMode mode = {CELL_WIDTH * 32, CELL_HEIGHT * 32, 32};
+    sfVideoMode mode = {CELL_WIDTH * DISP_TEXTURE, CELL_HEIGHT * DISP_TEXTURE, 32};
 
     demineur->par_w->w_size.x = CELL_WIDTH * DISP_TEXTURE;
     demineur->par_w->w_size.y = CELL_HEIGHT * DISP_TEXTURE;
@@ -41,36 +45,29 @@ int main()
     t_demineur          *demineur = init_struct();
 
     create_window(demineur);
-    create_map(demineur);
 
-    setup_mines(demineur);
-
-    afficher_Sprites(demineur);
-    display_map(demineur);
-
-
-    //  PARTIE TEST     //
-
-    display_bombes(demineur);
-    numberMinesAround(demineur);
-
-
-    while (sfRenderWindow_isOpen(demineur->par_w->window))
+    while (1)
     {
-        if (sfRenderWindow_pollEvent(demineur->par_w->window, &demineur->par_w->event))
-        if (demineur->par_w->event.type == sfEvtClosed)
-        sfRenderWindow_close(demineur->par_w->window);
+        create_map(demineur);
 
+        setup_mines(demineur);
+        numberMinesAround(demineur);
 
-        //if (sfMouse_isButtonPressed(sfMouseLeft) == sfTrue)   // TEST CLIC GAUCHE
-        // if (sfKeyboard_isKeyPressed(sfKeyEscape) == sfTrue)  // TEST TOUCHE CLAVIER
+        display_map(demineur);
 
-        // sfVector2i	mouse;                    // GET MOUSE POSITION
-        // mouse = sfMouse_getPosition(NULL);
+        //display_bombes(demineur);
 
-        event(demineur);
-
-        //sfRenderWindow_clear(demineur->par_w->window, sfBlack);
+        while (demineur->restart == true)
+        {
+            if (sfRenderWindow_pollEvent(demineur->par_w->window, &demineur->par_w->event))
+            if (demineur->par_w->event.type == sfEvtClosed)
+            sfRenderWindow_close(demineur->par_w->window);
+            if ((event(demineur)) == 1)
+            demineur->restart = false;
+        }
+        free_struct_map(demineur->map);
+        demineur->restart = true;
     }
-    return 0;
+    free_struct_demineur(demineur);
+    return (0);
 }

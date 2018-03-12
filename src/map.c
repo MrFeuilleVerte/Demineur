@@ -3,72 +3,36 @@
 * @Date:   2018-03-08T16:55:53+01:00
 * @Filename: map.c
  * @Last modified by:   vincent
- * @Last modified time: 2018-03-10T00:24:05+01:00
+ * @Last modified time: 2018-03-11T12:10:24+01:00
 */
 
 #include "demineur.h"
 
-void afficher_Sprites(t_demineur *demineur)
+void afficher_Sprites(t_demineur *demineur, int x, int y)
 {
-    int x = 0;
-    int y = 0;
-
-
-    while (y < demineur->mapSize.y)
+    if (demineur->map[y][x].isFlag == false)
     {
-        while (x < demineur->mapSize.x)
-        {
-            if (demineur->map[y][x].isBomb == true)
-            SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_REMOVEDBOMB); // ici les bombes
-            ++x;
-        }
-        x = 0;
-        ++y;
+        if (demineur->map[y][x].isBomb == true)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_EXPLODEDBOMB);
+        else if (demineur->map[y][x].bombAround == 1)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_1); // ici les 1
+        else if (demineur->map[y][x].bombAround == 2)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_2); // ici les 2
+        else if (demineur->map[y][x].bombAround == 3)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_3); // ici les 3
+        else if (demineur->map[y][x].bombAround == 4)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_4); // ici les 4
+        else if (demineur->map[y][x].bombAround == 5 )
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_5); // ici les 5
+        else if (demineur->map[y][x].bombAround == 6)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_6); // ici les 6
+        else if (demineur->map[y][x].bombAround == 7)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_7); // ici les 7
+        else if (demineur->map[y][x].bombAround == 8)
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_8); // ici les 8
+        else
+        SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_NONE);
     }
-
-    x = 0;
-    y = 0;
-
-    while (y < demineur->mapSize.y)
-    {
-        while (x < demineur->mapSize.x)
-        {
-            if (demineur->map[y][x].isClicked == true)
-            {
-                if (demineur->map[y][x].isBomb == true)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_EXPLODEDBOMB); // ici les bombes
-                else if (demineur->map[y][x].bombAround == 0)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_NONE); // ici les case vides
-                else if (demineur->map[y][x].bombAround == 1)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_1); // ici les 1
-                else if (demineur->map[y][x].bombAround == 2)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_2); // ici les 2
-                else if (demineur->map[y][x].bombAround == 3)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_3); // ici les 3
-                else if (demineur->map[y][x].bombAround == 4)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_4); // ici les 4
-                else if (demineur->map[y][x].bombAround == 5 )
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_5); // ici les 5
-                else if (demineur->map[y][x].bombAround == 6)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_6); // ici les 6
-                else if (demineur->map[y][x].bombAround == 7)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_7); // ici les 7
-                else if (demineur->map[y][x].bombAround == 8)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_8); // ici les 8
-            }
-            else if (demineur->map[y][x].isClicked == false){
-                if (demineur->map[y][x].isFlag == true)
-                SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_FLAG);
-                else SetTexture_Sprite(&demineur->map[y][x].sprite, TEXTURE_CELL);
-            }
-            ++x;
-        }
-        x = 0;
-        ++y;
-    }
-
-    //sfRenderWindow_clear(demineur->par_w->window, sfBlack);
-    display_map(demineur);
 }
 
 void display_bombes(t_demineur *demineur)
@@ -155,9 +119,9 @@ void init_map(t_demineur *demineur)
     int     x = 0;
     int     y = 0;
 
-    while (y != demineur->mapSize.y)
+    while (y != CELL_HEIGHT)
     {
-        while (x != demineur->mapSize.x)
+        while (x != CELL_WIDTH)
         {
             demineur->map[y][x].coord.x = x;
             demineur->map[y][x].coord.y = y;
